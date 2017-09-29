@@ -9,7 +9,6 @@ def registration(request):
     """
     user = User()
     validate = user.is_valid(request, 'registration')
-    print(request.session.get('user'))
     if validate == 'exists':
         response = {'status': 'User already exists.'}
     elif validate == 'created':
