@@ -4,7 +4,7 @@ from user.models import User
 
 class UserTestCase(TestCase):
     """
-    tast case for user model
+    tast case for user views
     """
 
     def setUp(self):
@@ -74,3 +74,30 @@ class UserTestCase(TestCase):
             {'status': 'User already exists.'}
         )
 
+
+    def test_logout_user_logged_in(self):
+        """
+            test for user login user
+        """
+        session = self.client.session
+        session['user'] = True
+        session.save()
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'),
+            {'status': 'loged out.'}
+        )
+
+    
+    def test_logout_user_not_logged_in(self):
+        """
+            test for user not loggged in user
+        """
+
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'),
+            {'status': 'you are logged out.'}
+        )

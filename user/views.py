@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.conf import settings
 from user.models import User
@@ -44,4 +43,5 @@ def logout(request):
         response = {'status': 'loged out.'}
     else:
         response = {'status': 'you are logged out.'}    
-        return JsonResponse(response)    
+    
+    return JsonResponse(response)    
